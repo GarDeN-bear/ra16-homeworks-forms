@@ -17,6 +17,7 @@ const WorkoutDiary = () => {
     } else {
       workoutsCopy.push(workout);
     }
+    workoutsCopy.sort((a, b) => new Date(a.date) - new Date(b.date));
     setWorkouts([...workoutsCopy]);
   };
 

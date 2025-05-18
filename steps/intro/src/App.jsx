@@ -1,5 +1,5 @@
 import "./App.css";
-import WorkoutDiary from "./WorkoutDiary.jsx";
+import WorkoutDiary from "./components/WorkoutDiary.jsx";
 
 function App() {
   return <WorkoutDiary />;

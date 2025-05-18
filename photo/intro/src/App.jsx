@@ -1,5 +1,5 @@
 import "./App.css";
-import PhotoManager from "./PhotoManager.jsx";
+import PhotoManager from "./components/PhotoManager.jsx";
 
 function App() {
   return <PhotoManager />;

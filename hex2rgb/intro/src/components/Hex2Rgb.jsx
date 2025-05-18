@@ -5,6 +5,7 @@ const Hex2Rgb = () => {
   const defaultRgbColor = "rgb(52, 73, 94)";
   const [hexInput, setHexInput] = useState(defaultHexColor);
   const [rgbOutput, setRgbOutput] = useState(defaultRgbColor);
+  const [backgroundColor, setBackgroundColor] = useState(defaultRgbColor);
 
   const getRgbOutput = (hex) => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -24,18 +25,9 @@ const Hex2Rgb = () => {
     return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
   };
 
-  const setBackgroundColor = (color, rgb) => {
-    const errorColor = "#FF0000";
-
-    if (rgb) {
-      document.body.style.backgroundColor = color;
-    } else {
-      document.body.style.backgroundColor = errorColor;
-    }
-  };
-
   const handleOnChange = (ev) => {
     ev.preventDefault();
+    const errorColor = "#FF0000";
 
     const hexText = ev.target.value;
     const rgb = getRgbOutput(hexText);
@@ -43,7 +35,11 @@ const Hex2Rgb = () => {
 
     setHexInput(hexText);
     setRgbOutput(rgbText);
-    setBackgroundColor(rgbText, rgb);
+    if (rgb) {
+      setBackgroundColor(rgbText);
+    } else {
+      setBackgroundColor(errorColor);
+    }
   };
 
   const handleFormSubmit = (ev) => {
@@ -51,17 +47,21 @@ const Hex2Rgb = () => {
   };
 
   return (
-    <form id="hex2rgb-form" onSubmit={handleFormSubmit}>
-      <input
-        id="hex-input"
-        type="text"
-        name="hex-text"
-        value={hexInput}
-        onChange={handleOnChange}
-        maxLength={7}
-      ></input>
-      <p id="rgb-output">{rgbOutput}</p>
-    </form>
+    <div className="hex2rgb-page">
+      <div className="background" style={{ backgroundColor: backgroundColor }}>
+        <form id="hex2rgb-form" onSubmit={handleFormSubmit}>
+          <input
+            id="hex-input"
+            type="text"
+            name="hex-text"
+            value={hexInput}
+            onChange={handleOnChange}
+            maxLength={7}
+          ></input>
+          <p id="rgb-output">{rgbOutput}</p>
+        </form>
+      </div>
+    </div>
   );
 };
 

@@ -6,17 +6,24 @@ const WorkoutDiary = () => {
   const [workouts, setWorkouts] = useState([]);
   const [editedWorkout, setEditedWorkout] = useState({});
 
-  const addWorkout = (workout) => {
+  const addWorkout = (workout, isEdited) => {
     if (!workout.date || !workout.distance) {
       return;
     }
-    const index = workouts.findIndex((w) => w.date === workout.date);
     let workoutsCopy = workouts;
-    if (index >= 0) {
-      workoutsCopy[index].distance += workout.distance;
+    if (isEdited) {
+      const index = workouts.findIndex((w) => w.date === editedWorkout.date);
+      workoutsCopy[index].date = workout.date;
+      workoutsCopy[index].distance = workout.distance;
     } else {
-      workoutsCopy.push(workout);
+      const index = workouts.findIndex((w) => w.date === workout.date);
+      if (index >= 0) {
+        workoutsCopy[index].distance += workout.distance;
+      } else {
+        workoutsCopy.push(workout);
+      }
     }
+
     workoutsCopy.sort((a, b) => new Date(a.date) - new Date(b.date));
     setWorkouts([...workoutsCopy]);
   };

@@ -3,10 +3,13 @@ import React, { useState, useEffect } from "react";
 const WorkoutInputs = ({ onAddWorkout, editedWorkout = {} }) => {
   const [date, setDate] = useState("");
   const [distance, setDistance] = useState(0);
+  const [isEdited, setIsEdited] = useState(false);
+
   useEffect(() => {
     if (editedWorkout.date && editedWorkout.distance !== undefined) {
       setDate(editedWorkout.date);
       setDistance(editedWorkout.distance);
+      setIsEdited(true);
     }
   }, [editedWorkout]);
 
@@ -16,10 +19,14 @@ const WorkoutInputs = ({ onAddWorkout, editedWorkout = {} }) => {
 
   const handleOnClickButton = (ev) => {
     ev.preventDefault();
-    onAddWorkout({
-      date: date,
-      distance: parseFloat(distance),
-    });
+    onAddWorkout(
+      {
+        date: date,
+        distance: parseFloat(distance),
+      },
+      isEdited
+    );
+    setIsEdited(false);
   };
 
   return (
